@@ -47,8 +47,15 @@ var mCurrentIndex = 0;
 var mRequest = new XMLHttpRequest();
 
 mRequest.addEventListener("readystatechange", () => {
-  console.log(mRequest, mRequest.readyState);
+  // console.log(mRequest, mRequest.readyState);
+  if (mRequest.readyState === 4 && mRequest.status === 200) {
+    const data = JSON.parse(mRequest.responseText);
+    console.log(data);
+  } else if (mRequest.readyState === 4) {
+    console.log("could not fetch the data");
+  }
 });
+
 mRequest.open("GET", "../images.json");
 mRequest.send();
 
