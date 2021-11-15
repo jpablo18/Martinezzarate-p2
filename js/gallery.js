@@ -32,7 +32,17 @@ function animate() {
 
 /************* DO NOT TOUCH CODE ABOVE THIS LINE ***************/
 
+
 function swapPhoto() {
+  if (mCurrentIndex >= mImages.length) {
+mCurrentIndex=0;
+}else if(mCurrentIndex< 0){
+mCurrentIndex= mImages[mImages.length-1];
+}
+document.getElementById('photo').src=mImages[mCurrentIndex].imgPath;
+var location = document.getElementsByClassName('location')[0].innerHTML = "Location:"+ mImages[mCurrentIndex].location;
+var description = document.getElementsByClassName('description')[0].innerHTML = "Description:"+ mImages[mCurrentIndex].description;
+var date = document.getElementsByClassName('date')[0].innerHTML = "Date:"+ mImages[mCurrentIndex].date;
 	//Add code here to access the #slideShow element.
 	//Access the img element and replace its source
 	//with a new image from your images array which is loaded
