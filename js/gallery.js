@@ -48,19 +48,35 @@ var date = document.getElementsByClassName('date')[0].innerHTML = "Date:"+ mImag
 	//with a new image from your images array which is loaded
 	//from the JSON string
 	console.log('swap photo');
+  mLastFrameTime=0;
+  mCurrentIndex += 1;
 }
+
+function iterateJSon(mJson){
+ for (var x=0; x<mJson.length; x++)
+ {
+mImages[x] = new GalleryImage();
+mImages[x].location = mJson.images[x].imgLocation;
+mImages[x].description = mJson.images[x].description;
+mImages[x].date = mJson.images[x].date;
+mImages[x].img = mJson.images[x].imgPath;
+ }
+  }
+
+
 
 // Counter for the mImages array
 var mCurrentIndex = 0;
 
 // XMLHttpRequest variable
 var mRequest = new XMLHttpRequest();
-
+function fetchJSON(){
 mRequest.addEventListener("readystatechange", () => {
   // console.log(mRequest, mRequest.readyState);
   if (mRequest.readyState === 4 && mRequest.status === 200) {
-    const data = JSON.parse(mRequest.responseText);
-    console.log(data);
+    mJson = JSON.parse(mRequest.responseText);
+    console.log(mJson);
+    iterateJSon(mJson);
   } else if (mRequest.readyState === 4) {
     console.log("could not fetch the data");
   }
@@ -68,7 +84,7 @@ mRequest.addEventListener("readystatechange", () => {
 
 mRequest.open("GET", "../images.json");
 mRequest.send();
-
+}
 // Array holding GalleryImage objects (see below).
 var mImages = [];
 
@@ -90,9 +106,9 @@ function makeGalleryImageOnloadCallback(galleryImage) {
 }
 
 $(document).ready( function() {
-
+fetchJSON();
 	// This initially hides the photos' metadata information
-	$('.details').eq(0).hide();
+	// $('.details').eq(0).hide();
 
 });
 
