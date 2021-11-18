@@ -82,9 +82,6 @@ function fetchJSON(){
   mRequest.send();
 }
 
-mRequest.open("GET", mUrl, true);
-mRequest.send();
-}
 // Array holding GalleryImage objects (see below).
 var mImages = [];
 
