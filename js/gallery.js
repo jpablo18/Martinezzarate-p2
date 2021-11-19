@@ -32,7 +32,7 @@ function animate() {
 
 /************* DO NOT TOUCH CODE ABOVE THIS LINE ***************/
 
-
+ 
 function swapPhoto() {
   if (mCurrentIndex >= mImages.length) {
 mCurrentIndex=0;
