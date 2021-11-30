@@ -32,46 +32,48 @@ function animate() {
 
 /************* DO NOT TOUCH CODE ABOVE THIS LINE ***************/
 
- 
 function swapPhoto() {
-  if (mCurrentIndex >= mImages.length) {
-mCurrentIndex=0;
-}else if(mCurrentIndex< 0){
-mCurrentIndex= mImages[mImages.length-1];
-}
-document.getElementById('photo').src=mImages[mCurrentIndex].img;
-document.getElementsByClassName('location')[0].innerHTML = "Location:"+ mImages[mCurrentIndex].location;
-document.getElementsByClassName('description')[0].innerHTML = "Description:"+ mImages[mCurrentIndex].description;
-document.getElementsByClassName('date')[0].innerHTML = "Date:"+ mImages[mCurrentIndex].date;
-	//Add code here to access the #slideShow element.
-	//Access the img element and replace its source
-	//with a new image from your images array which is loaded
-	//from the JSON string
-	console.log('swap photo');
-  mLastFrameTime=0;
-  mCurrentIndex += 1;
-}
-
-function iterateJSon(mJson){
- for (var x=0; x<mJson.images.length; x++)
- {
-mImages[x] = new GalleryImage();
-mImages[x].location = mJson.images[x].imgLocation;
-mImages[x].description = mJson.images[x].description;
-mImages[x].date = mJson.images[x].date;
-mImages[x].img = mJson.images[x].imgPath;
- }
+  
+  if(mCurrentIndex >= mImages.length)
+  {
+    mCurrentIndex = 0;
   }
 
+  if(mCurrentIndex < 0) {
+    mCurrentIndex = mImages.length-1;
+  }
 
+  document.getElementById('photo').src = mImages[mCurrentIndex].img;
+  document.getElementsByClassName('location')[0].innerHTML = "Location: " + mImages[mCurrentIndex].location;
+  document.getElementsByClassName('description')[0].innerHTML = "Description: " + mImages[mCurrentIndex].description;
+  document.getElementsByClassName('date')[0].innerHTML = "Date: " + mImages[mCurrentIndex].date;
+
+  mLastFrameTime = 0;
+  mCurrentIndex += 1;
+}
 
 // Counter for the mImages array
 var mCurrentIndex = 0;
 
+//PART 2 SLIDESHOW 1
 // XMLHttpRequest variable
 var mRequest = new XMLHttpRequest();
-function fetchJSON(){
- mRequest.onreadystatechange = function() {
+
+// Array holding GalleryImage objects (see below).
+var mImages = [];
+
+//PART 2 SLIDESHOW 2
+// Holds the retrived JSON information
+var mJson;
+
+// URL for the JSON to load by default
+// Some options for you are: images.json, images.short.json; you will need to create your own extra.json later
+var mUrl;
+
+//PART 2 SLIDESHOW 1 & 2
+function fetchJSON()
+{
+  mRequest.onreadystatechange = function() {
     console.log("on ready state change");
     if(this.readyState == 4 && this.status == 200) {
       mJson = JSON.parse(mRequest.responseText);
@@ -82,15 +84,18 @@ function fetchJSON(){
   mRequest.send();
 }
 
-// Array holding GalleryImage objects (see below).
-var mImages = [];
-
-// Holds the retrived JSON information
-var mJson;
-
-// URL for the JSON to load by default
-// Some options for you are: images.json, images.short.json; you will need to create your own extra.json later
-var mUrl = 'images.json';
+//PART 2 SLIDESHOW 3
+function iterateJSON(mJson)
+{
+  for( x = 0; x < mJson.images.length; x++ )
+  {
+    mImages[x] = new GalleryImage();
+    mImages[x].location = mJson.images[x].imgLocation;
+    mImages[x].description = mJson.images[x].description;
+    mImages[x].date = mJson.images[x].date;
+    mImages[x].img = mJson.images[x].imgPath;
+  }
+}
 
 
 //You can optionally use the following function as your event callback for loading the source of Images from your json data (for HTMLImageObject).
@@ -103,7 +108,21 @@ function makeGalleryImageOnloadCallback(galleryImage) {
 }
 
 $(document).ready( function() {
-fetchJSON();
+
+  const urlParams = new URLSearchParams(window.location.search);
+
+  for (const [key, value] of urlParams) {
+      console.log(`${key}:${value}`);
+      mUrl = value;
+  }
+if(mUrl == undefined)
+{
+  	mUrl = 'images.json';
+}
+
+  fetchJSON();
+
+
 	// This initially hides the photos' metadata information
 	// $('.details').eq(0).hide();
 
@@ -114,3 +133,10 @@ window.addEventListener('load', function() {
 	console.log('window loaded');
 
 }, false);
+
+function GalleryImage() {
+  var location;
+  var description;
+  var date;
+  var img;
+}
