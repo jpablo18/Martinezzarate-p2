@@ -148,6 +148,6 @@ $( ".moreIndicator" ).click(function() {
   )
 });
 
-$( ".details" ).click(function() {
-  $( ".details" ).slideToggle( "slow" );
+$( "div.details" ).click(function() {
+  $( "div.details" ).slideToggle( "slow" );
 });
