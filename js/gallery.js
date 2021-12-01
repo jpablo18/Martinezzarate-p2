@@ -140,4 +140,14 @@ function GalleryImage() {
   var date;
   var img;
 }
-$("moreIndicator").on( "click", handler );
+
+$( ".moreIndicator" ).click(function() {
+  if( $( ".moreIndicator" ).hasClass( "rot90" ).remove("rot90")+("rot270") )
+  else(
+    $( ".moreIndicator" ).hasClass( "rot270" ).remove("rot270")+("rot90")
+  )
+});
+
+$( ".details" ).click(function() {
+  $( ".details" ).slideToggle( "slow" );
+});
