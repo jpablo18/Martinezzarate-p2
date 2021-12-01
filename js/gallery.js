@@ -33,7 +33,7 @@ function animate() {
 /************* DO NOT TOUCH CODE ABOVE THIS LINE ***************/
 
 function swapPhoto() {
-  
+
   if(mCurrentIndex >= mImages.length)
   {
     mCurrentIndex = 0;
@@ -140,3 +140,4 @@ function GalleryImage() {
   var date;
   var img;
 }
+$("moreIndicator").on( "click", handler );
